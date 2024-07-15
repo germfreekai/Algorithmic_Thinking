@@ -10,8 +10,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define SIZE 100000
+
 // Sample easy function
-void identify_identical(int *values, int size);
+void identify_identical(int **snowflakes, int size);
 
 // Main function
 int are_identical(int *snow1, int *snow2);
@@ -21,36 +23,45 @@ int identical_left(int *snow1, int *snow2, int start_s2);
 
 int main(void)
 {
-    // int arr[5] = {1, 2, 3, 1, 5};
-    // identify_identical(arr, 5);
+    int **snowflakes = (int**)calloc(SIZE, sizeof(int*));
 
-    // sample
-    int snow1[6] = {1, 2, 3, 4, 5, 6};
-    int snow2[6] = {4, 5, 6, 1, 2, 3};
-    int snow3[6] = {4, 5, 7, 1, 2, 3};
+    int n, i, j;
 
-    if (are_identical(snow1, snow3))
-        fprintf(stdout, "Snowflakes are identical!\n");
-    else
-        fprintf(stderr, "Snowflakes are NOT identical!\n");
+    scanf("%d", &n);
+    for (i = 0; i < n; i++)
+        snowflakes[i] = (int*)calloc(6, sizeof(int));
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < 6; j++)
+        {
+            scanf("%d", &snowflakes[i][j]);
+        }
+    }
+
+    identify_identical(snowflakes, n);
+
+    for (i = 0; i < n; i++)
+        free(snowflakes[i]);
+    free(snowflakes);
 
     return EXIT_SUCCESS;
 }
 
-void identify_identical(int *values, int size)
+void identify_identical(int **snowflakes, int size)
 {
     for (int i = 0; i < size; i++)
     {
         for (int j = i + 1; j < size; j++)
         {
-            if (values[i] == values[j])
+            if (are_identical(snowflakes[i], snowflakes[j]))
             {
-                fprintf(stdout, "Twin integers found!\n");
+                fprintf(stdout, "Twin snowflakes found!\n");
                 return;
             }
         }
     }
-    fprintf(stderr, "No two integers are alike\n");
+    fprintf(stderr, "No twin snowflakes found\n");
 }
 
 int identical_right(int *snow1, int *snow2, int start_s2)
