@@ -34,7 +34,9 @@ int code(int *snow);
 
 int main(void)
 {
-    // Each node will have one snowflake
+    // This will be an array of linked lists
+    // each existing index will have a linked list
+    // of nodes that have that 'snowflake_code'
     static snowflake_node *snowflakes[SIZE] = {NULL};
     // This will be a "pointer" to nodes
     snowflake_node *snow;
