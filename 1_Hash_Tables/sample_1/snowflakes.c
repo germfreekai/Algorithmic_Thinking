@@ -21,8 +21,22 @@ int are_identical(int *snow1, int *snow2);
 int identical_right(int *snow1, int *snow2, int start_s2);
 int identical_left(int *snow1, int *snow2, int start_s2);
 
+// Doing less work
+// Weed out some options
+int code(int *snow);
+
+// Now we will create a linked list
+typedef struct _snowflake_node
+{
+    int *snowflake;
+    struct snowflake_node *next;
+}snowflake_node;
+
 int main(void)
 {
+    static snowflake_node *snowflakes[SIZE] = {NULL};
+    snowflake_node *snow;
+
     int **snowflakes = (int**)calloc(SIZE, sizeof(int*));
 
     int n, i, j;
@@ -105,4 +119,15 @@ int are_identical(int *snow1, int *snow2)
             return 1;
     }
     return 0;
+}
+
+int code(int *snow)
+{
+    int sum = 0;
+    for (int i = 0; i < 6; i++)
+        sum += snow[i];
+    // We mod SIZE to make sure the number
+    // is not to high - somewhere between
+    // 0 - 99999
+    return sum % SIZE;
 }
